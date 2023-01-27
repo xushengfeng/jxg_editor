@@ -132,6 +132,17 @@ input[type="checkbox"] {
     backdrop-filter: var(--blur);
 }
 
+body > #main {
+    @apply grid;
+    grid-template-columns: 50vw 50vw;
+    grid-template-rows: min-content 50vh;
+}
+body > #main > #nav {
+    grid-area: 1 / 1 / 2 / 3;
+}
+body > #main > #画布 > #board {
+    @apply w-full h-full;
+}
 
 @media (any-pointer: coarse) {
     :root {
