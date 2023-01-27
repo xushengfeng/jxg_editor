@@ -1,0 +1,27 @@
+{
+    "name": "jxg_editor",
+    "author": {
+        "email": "xushengfeng_zg@163.com",
+        "name": "xsf"
+    },
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host 0.0.0.0",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "version": "0.0.1",
+    "homepage": "https://github.com/xushengfeng/jxg_editor/",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "json5": "^2.2.2",
+        "jsxgraph": "^1.5.0"
+    },
+    "devDependencies": {
+        "postcss": "^8.4.20",
+        "tailwindcss": "^3.2.4",
+        "typescript": "^4.9.4",
+        "vite": "^4.0.0"
+    }
+}

@@ -1,0 +1,1 @@
+import JXG from "jsxgraph";

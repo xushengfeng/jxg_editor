@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    --blur: blur(24px);
+    --icon-color: none;
+    --icon-p-b-size: 32px;
+    --icon-size: 24px;
+    --icon-margin: 4px;
+    --item-height: 24px;
+    --item-icon: 24px;
+    --item-icon-margin: 0;
+    --zoom: 1;
+    --bg-color1: rgba(225, 225, 225, 0.8);
+    --bg-color2: rgba(255, 255, 255, 0.72);
+    --bg-color3: #ddd;
+    --bg-color4: #f5f5f5;
+    --bg-color5: rgba(136, 136, 136, 0.2);
+    --color5: #eee;
+    --color6: #000;
+    --shadow1: 0 0 4px #3333;
+    --bg1: #ffffff;
+    --main-color: #0860f2;
+    --main-font-color: #fff;
+    --icon-color: none;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ddd;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}
+::-webkit-scrollbar-track {
+    background: #0000;
+}
+::-webkit-scrollbar-button {
+    border-radius: 10px;
+    height: 8px;
+    width: 8px;
+    background-color: #ddd;
+}
+::-webkit-scrollbar-corner {
+    background-color: #0000;
+}
+
+.icon {
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    filter: var(--icon-color);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.icon-pel > div {
+    @apply icon-m flex-shrink-0;
+}
+.icon-m {
+    @apply h-8 w-8 relative cursor-pointer;
+}
+.icon-m > .icon {
+    @apply h-6 w-6 top-1 left-1;
+}
+
+.hide_scrool_bar::-webkit-scrollbar {
+    display: none;
+}
+.hide_scrool_bar {
+    scrollbar-width: none;
+}
+
+.checkbox {
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    margin-inline-end: 0.4em;
+    border: 2px #888 solid;
+    cursor: pointer;
+    border-radius: 0.25em;
+}
+.checkbox:checked {
+    background-color: var(--main-color);
+    border: 2px var(--main-color) solid;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(255, 255, 255)' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 8 9 19 4 14'%3E%3C/polyline%3E%3C/svg%3E");
+    background-position: center;
+    background-size: 0.75em auto;
+    background-repeat: no-repeat;
+}
+
+html {
+    height: 100%;
+    @apply fixed top-0 left-0;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    color: var(--color6);
+}
+
+input,
+textarea,
+select {
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+input[type="checkbox"] {
+    @apply checkbox;
+}
+
+.bar {
+    background-color: var(--bg-color2);
+    backdrop-filter: var(--blur);
+}
+
+
+@media (any-pointer: coarse) {
+    :root {
+        --icon-p-b-size: 48px;
+        --icon-size: 28px;
+        --icon-margin: 10px;
+        --item-height: 36px;
+        --item-icon: 24px;
+        --item-icon-margin: 6px;
+    }
+    .icon-m {
+        @apply h-12 w-12 relative !important;
+    }
+    .icon-m > .icon {
+        @apply h-8 w-8 top-2 left-2 !important;
+    }
+}
+
+@media all and (orientation: portrait) {
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color1: rgba(100, 100, 100, 0.8);
+        --bg-color2: rgba(0, 0, 0, 0.72);
+        --bg-color3: #222;
+        --bg-color4: #161616;
+        --bg-color5: rgba(119, 119, 119, 0.2);
+        --color5: #111;
+        --color6: #fff;
+        --shadow1: 0 0 4px #ccc6;
+        --bg1: #000000;
+        --icon-color: invert(1) !important;
+    }
+}
