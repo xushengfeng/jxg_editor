@@ -28,5 +28,12 @@ let editor = monaco.editor.create(code, {
 monaco.languages.typescript.javascriptDefaults.addExtraLib(`${jxg_type}\ndeclare const JXG: JXG;`);
 editor.onDidChangeModelContent((e) => {
     console.log(editor.getValue());
-    eval(`{let gid = 'board';${editor.getValue()}}`);
 });
+
+editor.onDidBlurEditorText(() => {
+    run_code(editor.getValue());
+});
+
+function run_code(code: string) {
+    eval(`{let gid = 'board';${code}}`);
+}
