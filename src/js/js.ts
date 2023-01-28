@@ -2,6 +2,7 @@ import JXG from "jsxgraph";
 import loader from "@monaco-editor/loader";
 loader.config({ paths: { vs: "https://unpkg.com/monaco-editor@0.34.1/min/vs" } }); // or local
 let monaco = await loader.init();
+import jxg_type from "../../lib/index.d.ts?raw";
 
 const code = document.getElementById("code");
 
@@ -24,6 +25,7 @@ let editor = monaco.editor.create(code, {
     wordWrap: "on",
 });
 
+monaco.languages.typescript.javascriptDefaults.addExtraLib(`${jxg_type}\ndeclare const JXG: JXG;`);
 editor.onDidChangeModelContent((e) => {
     console.log(editor.getValue());
     eval(`{let gid = 'board';${editor.getValue()}}`);
