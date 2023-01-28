@@ -143,6 +143,24 @@ body > #main > #nav {
 body > #main > #画布 > #board {
     @apply w-full h-full resize;
 }
+body > #main > #run {
+    @apply flex flex-col;
+}
+body > #main > #run > #code {
+    @apply flex-grow;
+}
+body > #main > #run > #math {
+    @apply flex;
+}
+body > #main > #run > #math > math-field {
+    @apply flex-grow border;
+}
+body > #main > #run > #math > #add_math {
+    @apply w-4 h-4 border;
+}
+body > #main > #run > #math > #add_function {
+    @apply w-4 h-4 border;
+}
 
 @media (any-pointer: coarse) {
     :root {
