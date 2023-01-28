@@ -1,5 +1,7 @@
 import JXG from "jsxgraph";
-import * as monaco from "monaco-editor";
+import loader from "@monaco-editor/loader";
+loader.config({ paths: { vs: "https://unpkg.com/monaco-editor@0.34.1/min/vs" } }); // or local
+let monaco = await loader.init();
 
 const code = document.getElementById("code");
 
