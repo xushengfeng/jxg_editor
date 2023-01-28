@@ -77,3 +77,88 @@ if (url.get("code")) {
     editor.setValue(url.get("code"));
     run_code(url.get("code"));
 }
+
+const s = {
+    angle: ["angle"],
+    arc: ["arc"],
+    arrow: ["arrow"],
+    axis: ["axis"],
+    bisector: ["bisector"],
+    boxplot: ["boxplot"],
+    button: ["button"],
+    cardinalspline: ["cardinalspline"],
+    chart: ["chart"],
+    checkbox: ["checkbox"],
+    circle: ["circle"],
+    circumcircle: ["circumcircle"],
+    circumcirclearc: ["circumcirclearc"],
+    circumcirclesector: ["circumcirclesector"],
+    comb: ["comb"],
+    conic: ["conic"],
+    curve: ["curve"],
+    curvedifference: ["curvedifference"],
+    curveintersection: ["curveintersection"],
+    curveunion: ["curveunion"],
+    ellipse: ["ellipse"],
+    functiongraph: ["functiongraph"],
+    glider: ["glider"],
+    grid: ["grid"],
+    group: ["group"],
+    hatch: ["hatch"],
+    hyperbola: ["hyperbola"],
+    image: ["image"],
+    inequality: ["inequality"],
+    input: ["input"],
+    integral: ["integral"],
+    intersection: ["intersection"],
+    line: ["line"],
+    line1: ["line", { straightFirst: false, straightLast: true }],
+    line2: ["line", { straightFirst: false, straightLast: false }],
+    metapostspline: ["metapostspline"],
+    midpoint: ["midpoint"],
+    minorArc: ["minorArc"],
+    mirrorelement: ["mirrorelement"],
+    normal: ["normal"],
+    parabola: ["parabola"],
+    perpendicular: ["perpendicular"],
+    plot: ["plot"],
+    point: ["point"],
+    polygon: ["polygon"],
+    polygonalchain: ["polygonalchain"],
+    regularpolygon: ["regularpolygon"],
+    reflection: ["reflection"],
+    riemannsum: ["riemannsum"],
+    sector: ["sector"],
+    semicircle: ["semicircle"],
+    segment: ["segment"],
+    slider: ["slider"],
+    slopetriangle: ["slopetriangle"],
+    stepfunction: ["stepfunction"],
+    tangent: ["tangent"],
+    tapemeasure: ["tapemeasure"],
+    text: ["text"],
+    ticks: ["ticks"],
+    tracecurve: ["tracecurve"],
+    transform: ["transform"],
+    turtle: ["turtle"],
+    view3d: ["view3d"],
+};
+
+monaco.languages.registerCompletionItemProvider("javascript", {
+    provideCompletionItems: function (model, position) {
+        let x = [];
+        for (let i in s) {
+            x.push({
+                label: i,
+                kind: monaco.languages.CompletionItemKind.Snippet,
+                insertText: `let ${s[i][0]}$1 = brd.create("${s[i][0]}", [\${2:p1}, \${3:p2}]${
+                    s[i][1] ? `, ${JSON.stringify(s[i][1])}` : ""
+                })`,
+                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            });
+        }
+        return {
+            suggestions: x,
+        };
+    },
+});
