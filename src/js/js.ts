@@ -14,8 +14,10 @@ const add_function = document.getElementById("add_function");
 if (JXG) {
 }
 
+const default_text = `let brd=JXG.JSXGraph.initBoard(gid,{axis:true,showCopyRight:false,boundingbox:[-4,4,4,-4]});`;
+
 let editor = monaco.editor.create(code, {
-    value: `let brd=JXG.JSXGraph.initBoard(gid,{axis:true,showCopyRight:false,boundingbox:[-4,4,4,-4]});`,
+    value: default_text,
     language: "javascript",
     minimap: { enabled: false },
     automaticLayout: true,
@@ -44,6 +46,8 @@ editor.onDidBlurEditorText(() => {
 function run_code(code: string) {
     eval(`{let gid = 'board';${code}}`);
 }
+
+run_code(default_text);
 
 function get_math_value() {
     // @ts-ignore
