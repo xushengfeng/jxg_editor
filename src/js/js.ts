@@ -30,7 +30,9 @@ let editor = monaco.editor.create(code, {
     wordWrap: "on",
 });
 
-monaco.languages.typescript.javascriptDefaults.addExtraLib(`${jxg_type}\ndeclare const JXG: JXG;`);
+monaco.languages.typescript.javascriptDefaults.addExtraLib(
+    `${jxg_type}\ndeclare const JXG: JXG;declare const run_math: (code: string, v?: { [key: string]: number }) => viod;`
+);
 editor.onDidChangeModelContent((e) => {
     console.log(editor.getValue());
 });
