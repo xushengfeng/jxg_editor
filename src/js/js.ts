@@ -71,3 +71,9 @@ let run_math = (window["run_math"] = (code: string, v?: { [key: string]: number 
     let out = ex.subs(v).N().valueOf();
     return out;
 });
+
+const url = new URLSearchParams(location.search);
+if (url.get("code")) {
+    editor.setValue(url.get("code"));
+    run_code(url.get("code"));
+}
