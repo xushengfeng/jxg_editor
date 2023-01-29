@@ -148,7 +148,7 @@ body > #main > #run {
     @apply flex flex-col;
 }
 body > #main > #run > #code {
-    @apply flex-grow;
+    @apply flex-grow overflow-hidden;
 }
 body > #main > #run > #math {
     @apply flex;
