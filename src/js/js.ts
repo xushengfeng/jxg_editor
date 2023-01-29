@@ -54,27 +54,146 @@ function get_math_value() {
     return mfe.value as string;
 }
 
+const ce = new ComputeEngine();
+
+function get_math_js() {
+    const expr = ce.parse(get_math_value(), { canonical: false });
+    if (!expr.isValid) return "";
+    let json = expr.json;
+    console.log(json);
+    let w = (l: typeof json) => {
+        if (Array.isArray(l)) {
+            let tl = l.slice().splice(1, l.length - 1);
+            switch (l[0]) {
+                // arithmetic
+                case "Add":
+                    return `(${tl.map((el) => `${w(el)}`).join(" + ")})`;
+                case "Negate":
+                    return `-(${w(tl[0])})`;
+                case "Subtract":
+                    return `(${tl.map((el) => `${w(el)}`).join(" - ")})`;
+                case "Multiply":
+                    return `(${tl.map((el) => `${w(el)}`).join(" * ")})`;
+                case "Divide":
+                    return `(${tl.map((el) => `${w(el)}`).join(" / ")})`;
+                case "Power":
+                    return `Math.pow(${w(tl[0])}, ${w(tl[1])})`;
+                case "Root":
+                    return `JXG.Math.nthroot(${w(tl[0])}, ${w(tl[1])})`;
+                case "Sqrt":
+                    return `Math.sqrt(${w(tl[0])})`;
+                case "Square":
+                    return `Math.pow(${w(tl[0])}, 2)`;
+                case "Exp":
+                    return `Math.exp(${w(tl[0])})`;
+                case "Ln":
+                    return `Math.log(${w(tl[0])})`;
+                case "Log":
+                    return `(Math.log(${w(tl[0])}) / Math.log(${w(tl[1])}))`;
+                case "Lb":
+                    return `Math.log2(${w(tl[0])})`;
+                case "Lg":
+                    return `Math.log10(${w(tl[0])})`;
+                case "LogOnePlus":
+                    return `Math.log1p(${w(tl[0])})`;
+                case "Abs":
+                    return `Math.abs(${w(tl[0])})`;
+                case "Ceil":
+                    return `Math.ceil(${w(tl[0])})`;
+                case "Floor":
+                    return `Math.floor(${w(tl[0])})`;
+                case "Round":
+                    return `Math.round(${w(tl[0])})`;
+                case "Clamp":
+                    return `Math.min(Math.max(${w(tl[0])}, ${w(tl[1])} || -1), ${w(tl[2])} || 1)`;
+                case "Max":
+                    return `Math.max(${tl.map((i) => w(i)).join(", ")})`;
+                case "Min":
+                    return `Math.min(${tl.map((i) => w(i)).join(", ")})`;
+                case "Rational":
+                    return `(${w(tl[0])} / ${w(tl[1])})`;
+                // trigonometry
+                case "Sin":
+                    return `Math.sin(${w(tl[0])})`;
+                case "Cos":
+                    return `Math.cos(${w(tl[0])})`;
+                case "Tan":
+                    return `Math.tan(${w(tl[0])})`;
+                case "Cot":
+                    return `(1 / Math.tan(${w(tl[0])}))`;
+                case "Sec":
+                    return `(1 / Math.cos(${w(tl[0])}))`;
+                case "Csc":
+                    return `(1 / Math.sin(${w(tl[0])}))`;
+                case "Arcsin":
+                    return `Math.asin(${w(tl[0])})`;
+                case "Arccos":
+                    return `Math.acos(${w(tl[0])})`;
+                case "Arctan":
+                    return `Math.atan(${w(tl[0])})`;
+                case "Arctan2":
+                    return `Math.atan2(${w(tl[0])})`;
+                case "Acot":
+                    return `Math.atan(1 / (${w(tl[0])}))`;
+                case "Asec":
+                    return `Math.acos(1 / (${w(tl[0])}))`;
+                case "Acsc":
+                    return `Math.asin(1 / (${w(tl[0])}))`;
+                case "Sinh":
+                    return `Math.sinh(${w(tl[0])})`;
+                case "Cosh":
+                    return `Math.cosh(${w(tl[0])})`;
+                case "Tanh":
+                    return `Math.tanh(${w(tl[0])})`;
+                case "Coth":
+                    return `(1 / Math.tanh(${w(tl[0])}))`;
+                case "Sech":
+                    return `(1 / Math.cosh(${w(tl[0])}))`;
+                case "Csch":
+                    return `(1 / Math.sinh(${w(tl[0])}))`;
+                case "Arsinh":
+                    return `Math.asinh(${w(tl[0])})`;
+                case "Arcosh":
+                    return `Math.acosh(${w(tl[0])})`;
+                case "Artanh":
+                    return `Math.atanh(${w(tl[0])})`;
+                case "Arcoth":
+                    return `(1/2*Math.log((1+${w(tl[0])})/(${w(tl[0])}-1)))`;
+                case "Asech":
+                    return `Math.log(Math.sqrt(Math.pow(1/(${w(tl[0])}),2)-1)+1/(${w(tl[0])}))`;
+                case "Acsch":
+                    return `Math.log(Math.sqrt(Math.pow(1/(${w(tl[0])}),2)+1)+1/(${w(tl[0])}))`;
+                case "Erf":
+                    return `JXG.Math.erf(${w(tl[0])}) `;
+                case "Erfc":
+                    return `JXG.Math.erfc(${w(tl[0])})`;
+                case "Factorial":
+                    return `JXG.Math.factorial(${w(tl[0])})`;
+            }
+        }
+        if (typeof l == "string") {
+            switch (l) {
+                case "Pi":
+                    return `Math.PI`;
+            }
+        }
+        if (!isNaN(Number(l))) {
+            return Number(l);
+        }
+        return l;
+    };
+    return w(json);
+}
+
 add_math.onclick = () => {
-    editor.trigger("keyboard", "type", { text: String(run_math(get_math_value())) });
+    editor.trigger("keyboard", "type", { text: String(get_math_js()) });
     editor.focus();
 };
 add_function.onclick = () => {
-    let code = `(x)=>run_math("${get_math_value().replaceAll("\\", "\\\\")}", {x})`;
+    let code = `let f = (x) => {return ${get_math_js()}};`;
     editor.trigger("keyboard", "type", { text: code });
     editor.focus();
 };
-
-const ce = new ComputeEngine();
-let parse_o: { [key: string]: ReturnType<typeof ce.parse> } = {};
-let run_math = (window["run_math"] = (code: string, v?: { [key: string]: number }) => {
-    if (!v) v = {};
-    let ex = parse_o[code];
-    if (!ex) {
-        ex = parse_o[code] = ce.parse(code);
-    }
-    let out = ex.subs(v).N().valueOf();
-    return out;
-});
 
 const url = new URLSearchParams(location.search);
 if (url.get("code")) {
