@@ -200,6 +200,19 @@ add_function.onclick = () => {
     editor.focus();
 };
 
+editor.onDidChangeCursorSelection(() => {
+    let n = editor.getPosition().lineNumber;
+    let text = editor.getValue().split("\n")[n - 1];
+    console.log(text);
+    let code = text.match(/\/\*\s*?\$([\s\S]*?)\$\s*?\*\//)?.[1]?.trim();
+    if (code) {
+        if (ce.parse(code).isValid) {
+            // @ts-ignore
+            mfe.value = code;
+        }
+    }
+});
+
 const url = new URLSearchParams(location.search);
 if (url.get("code")) {
     editor.setValue(url.get("code"));
