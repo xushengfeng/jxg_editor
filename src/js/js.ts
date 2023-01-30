@@ -185,12 +185,17 @@ function get_math_js() {
     return w(json);
 }
 
+function to_com() {
+    let code = get_math_value();
+    return `/* $${code}$ */`;
+}
+
 add_math.onclick = () => {
-    editor.trigger("keyboard", "type", { text: String(get_math_js()) });
+    editor.trigger("keyboard", "type", { text: `${to_com()} ${get_math_js()}` });
     editor.focus();
 };
 add_function.onclick = () => {
-    let code = `let f = (x) => {return ${get_math_js()}};`;
+    let code = `let f = (x) => {return ${to_com()} ${get_math_js()}};`;
     editor.trigger("keyboard", "type", { text: code });
     editor.focus();
 };
