@@ -342,6 +342,11 @@ const s = {
     view3d: ["view3d", []],
 };
 
+const snip2 = {
+    broad: default_text,
+    broad1: "let brd = JXG.JSXGraph.initBoard(gid, { axis: true, showCopyRight: false, boundingbox: [-3, 3, 3, -3], keepAspectRatio: true, defaultAxes: { x: { ticks: { visible: false } }, y: { ticks: { visible: false } } } });",
+};
+
 monaco.languages.registerCompletionItemProvider("javascript", {
     provideCompletionItems: function (model, position) {
         let x = [];
@@ -361,6 +366,14 @@ monaco.languages.registerCompletionItemProvider("javascript", {
                 insertText: `let \${1:${s[i][0]}} = brd.create("${s[i][0]}", ${p}${
                     s[i][2] ? `, ${JSON.stringify(s[i][2])}` : ""
                 })`,
+                insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            });
+        }
+        for (let i in snip2) {
+            x.push({
+                label: i,
+                kind: monaco.languages.CompletionItemKind.Snippet,
+                insertText: snip2[i],
                 insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
             });
         }
