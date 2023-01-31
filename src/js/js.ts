@@ -14,7 +14,7 @@ const add_function = document.getElementById("add_function");
 if (JXG) {
 }
 
-const default_text = `let brd=JXG.JSXGraph.initBoard(gid,{axis:true,showCopyRight:false,boundingbox:[-4,4,4,-4]});`;
+const default_text = `let brd = JXG.JSXGraph.initBoard(gid, { axis: true, showCopyRight: false, boundingbox: [-3, 3, 3, -3], keepAspectRatio: true });`;
 
 let editor = monaco.editor.create(code, {
     value: default_text,
