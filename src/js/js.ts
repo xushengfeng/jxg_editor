@@ -5,6 +5,30 @@ let monaco = await loader.init();
 import jxg_type from "../../lib/index.d.ts?raw";
 import "//unpkg.com/mathlive";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+let mathscript = document.createElement("script");
+declare global {
+    interface Window {
+        MathJax: any;
+    }
+}
+window.MathJax = {
+    tex: {
+        inlineMath: [["$", "$"]],
+    },
+    options: {
+        enableMenu: false,
+    },
+
+    startup: {
+        pageReady: () => {
+            return window.MathJax.startup.defaultPageReady().then(() => {
+                console.log("MathJax initial typesetting complete");
+            });
+        },
+    },
+};
+mathscript.src = "https://unpkg.com/mathjax@3.2.2/es5/tex-svg-full.js";
+document.body.append(mathscript);
 
 const code = document.getElementById("code");
 const mfe = document.querySelector("math-field");
@@ -12,6 +36,7 @@ const add_math = document.getElementById("add_math");
 const add_function = document.getElementById("add_function");
 
 if (JXG) {
+    JXG.Options.text.useMathJax = true;
 }
 
 const default_text = `let brd = JXG.JSXGraph.initBoard(gid, { axis: true, showCopyRight: false, boundingbox: [-3, 3, 3, -3], keepAspectRatio: true });`;
